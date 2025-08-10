@@ -1,0 +1,8 @@
+@use "../../../styles/partials/variables" as *;
+
+.primaryLayout {
+    display: flex;
+    position: relative;
+    flex: 1;
+    background-color: $dark-mode-background-color;
+}
