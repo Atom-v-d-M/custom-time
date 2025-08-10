@@ -3,16 +3,23 @@
 import PrimaryLayout from "@/components/layouts/primaryLayout";
 import styles from "./page.module.scss";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function TimeSettingsPage() {
 
   const [timeInputValue, setTimeInputValue] = useState<number | ''>(55)
+  const router = useRouter();
+
+  const handleStartTimer = () => {
+    if (timeInputValue && typeof timeInputValue === 'number') {
+      router.push(`/timer?duration=${timeInputValue}`);
+    }
+  };
   
   return (
     <PrimaryLayout>
       <div className={styles.timeSettingsPage}>
         <div className={styles.timeSettingsPage__contentContainer}>
-          <h1 className={styles.timeSettingsPage__title}>Timer Duration</h1>
             <input 
               type="number" 
               placeholder="00"
@@ -40,6 +47,7 @@ export default function TimeSettingsPage() {
           <button
             disabled={!timeInputValue}
             className={styles.timeSettingsPage__startTimerButton}
+            onClick={handleStartTimer}
           >Start</button>
         </div>
       </div>
