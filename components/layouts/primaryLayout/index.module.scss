@@ -5,4 +5,9 @@
     position: relative;
     flex: 1;
     background-color: $dark-mode-background-color;
+    /* Ensure full viewport coverage */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    width: 100%;
+    overflow: hidden;
 }
