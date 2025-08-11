@@ -100,7 +100,24 @@ export default function TimerPage() {
         return (
             <PrimaryLayout>
                 <div className={styles.timerPage}>
-                    timer done
+                    <h1 className={styles.timerPage__timerDone}>Timer Done</h1>
+                    <div className={styles.timerPage__actionsContainer}>
+                        <div className={styles.timerPage__standardAction} onClick={() => {
+                            debugger
+                            window.location.reload()
+                        }}>
+                            <svg width="50" height="58" viewBox="0 0 50 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21.875 58C15.5729 57.2141 10.3516 54.4503 6.21094 49.7087C2.07031 44.967 0 39.4002 0 33.0081C0 29.5501 0.677083 26.2362 2.03125 23.0664C3.38542 19.8966 5.3125 17.1328 7.8125 14.7751L12.2656 19.2547C10.2865 21.0361 8.78906 23.1057 7.77344 25.4634C6.75781 27.8211 6.25 30.336 6.25 33.0081C6.25 37.6188 7.70833 41.6924 10.625 45.229C13.5417 48.7656 17.2917 50.9268 21.875 51.7127V58ZM28.125 58V51.7127C32.6562 50.8744 36.3932 48.7001 39.3359 45.1897C42.2786 41.6793 43.75 37.6188 43.75 33.0081C43.75 27.7687 41.9271 23.3153 38.2812 19.6477C34.6354 15.9801 30.2083 14.1463 25 14.1463H24.7656L28.2031 17.6043L23.8281 22.0054L12.8906 11.0027L23.8281 0L28.2031 4.40108L24.7656 7.85908H25C31.9792 7.85908 37.8906 10.2954 42.7344 15.168C47.5781 20.0407 50 25.9874 50 33.0081C50 39.3478 47.9297 44.8884 43.7891 49.6301C39.6484 54.3717 34.4271 57.1617 28.125 58Z" fill="#E3E3E3"/>
+                            </svg>
+                        </div>
+                        <div className={styles.timerPage__standardAction} onClick={() => {
+                            router.push('/')
+                        }}>
+                            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 50L0 45L20 25L0 5L5 0L25 20L45 0L50 5L30 25L50 45L45 50L25 30L5 50Z" fill="#E3E3E3"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </PrimaryLayout>
         )

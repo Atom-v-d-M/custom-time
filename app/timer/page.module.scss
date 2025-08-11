@@ -51,6 +51,54 @@
   &__clearButton {
     z-index: 3;
   }
+
+  &__timerDone {
+    user-select: none;
+    font-size: 56px;
+    font-weight: bold;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+
+    @include mobile-medium {
+      font-size: 72px;
+    }
+
+    @include mobile-large {
+      font-size: 85px;
+    }
+
+    @include tablet {
+      font-size: 125px;
+    }
+
+    @include desktop {
+      font-size: 200px;
+    }
+  }
+
+  &__actionsContainer {
+    display: flex;
+    gap: 3rem;
+  }
+
+  &__standardAction {
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 12px;
+    transition: background-color 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
+  
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  }
 }
 
 .audioButton {
