@@ -15,14 +15,25 @@ export default function TimerPage() {
   const [remainingMinutes, setRemainingMinutes] = useState<number>(0)
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0)
 
+  const [timerDone, setTimerDone] = useState<boolean>(false)
+
   useEffect(() => {
+    const existingDuration = localStorage?.getItem("duration")
+
+    if (existingDuration) {
+        setTimerDuration(parseInt(existingDuration, 10))
+        return
+    }
+
     // Get the duration from URL search params
-    const duration = searchParams.get('duration');
+    const searchParamDuration = searchParams.get('duration');
     
-    if (duration) {
-      const parsedDuration = parseInt(duration, 10);
+    if (searchParamDuration) {
+      const parsedDuration = parseInt(searchParamDuration, 10);
+
       if (!isNaN(parsedDuration) && parsedDuration > 0 && parsedDuration <= 60) {
         // fix the duration issues for animation. needs to know about active timers
+        localStorage?.setItem("duration", parsedDuration?.toString())
         setTimerDuration(parsedDuration);
       } else {
         // Invalid duration, redirect back to settings page
@@ -34,50 +45,73 @@ export default function TimerPage() {
     }
   }, [searchParams, router]);
 
-  useEffect(() => {
-    if (!timerDuration) return
-    let timerEndTime = localStorage?.getItem("endTime")
+    useEffect(() => {
+        if (!timerDuration) return
+        let timerEndTime = localStorage?.getItem("endTime")
 
-    if (!timerEndTime) {
-        const newTimerEndTime = moment().add(timerDuration, "minutes").valueOf()
-        localStorage?.setItem("endTime", newTimerEndTime.toString())
-        timerEndTime = newTimerEndTime.toString()
+        if (!timerEndTime) {
+            const newTimerEndTime = moment().add(timerDuration, "minutes").valueOf()
+            localStorage?.setItem("endTime", newTimerEndTime.toString())
+            timerEndTime = newTimerEndTime.toString()
+        }
+
+        const interval = setInterval(() => {
+            const now = moment().valueOf();
+            const endTime = parseInt(timerEndTime);
+            const difference = endTime - now;
+
+            if (difference <= 0) {
+                clearInterval(interval);
+                setRemainingMinutes(0);
+                setRemainingSeconds(0);
+                return;
+            }
+
+            // Calculate total minutes and seconds from the difference
+            const totalMinutes = Math.floor(difference / (1000 * 60));
+            const totalSeconds = Math.floor(difference / 1000);
+
+            if (!totalMinutes && !totalSeconds) {
+                localStorage?.removeItem("duration")
+                localStorage?.removeItem("endTime")
+                setTimerDone(true)
+            }
+
+            // Set the remaining minutes and seconds
+            setRemainingMinutes(totalMinutes);
+            setRemainingSeconds(totalSeconds % 60);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timerDuration]);
+
+
+    const handleStopTimer = () => {
+        localStorage?.removeItem("duration")
+        localStorage?.removeItem("endTime")
+        router.push('/')
     }
 
-  const interval = setInterval(() => {
-    const now = moment().valueOf();
-    const endTime = parseInt(timerEndTime);
-    const difference = endTime - now;
-
-    if (difference <= 0) {
-      clearInterval(interval);
-      setRemainingMinutes(0);
-      setRemainingSeconds(0);
-      return;
+    if (timerDone) {
+        return (
+            <PrimaryLayout>
+                <div className={styles.timerPage}>
+                    timer done
+                </div>
+            </PrimaryLayout>
+        )
     }
 
-    // Calculate total minutes and seconds from the difference
-    const totalMinutes = Math.floor(difference / (1000 * 60));
-    const totalSeconds = Math.floor(difference / 1000);
-    
-    // Set the remaining minutes and seconds
-    setRemainingMinutes(totalMinutes);
-    setRemainingSeconds(totalSeconds % 60);
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, [timerDuration]);
-
-  // Show loading or redirect if no valid duration
-  if (!timerDuration || (!remainingMinutes && !remainingSeconds)) {
-    return (
-      <PrimaryLayout>
-        <div className={styles.timerPage}>
-          <RandomShapeLoading />
-        </div>
-      </PrimaryLayout>
-    );
-  }
+    // Show loading or redirect if no valid duration
+    if (!timerDuration || (!remainingMinutes && !remainingSeconds)) {
+        return (
+            <PrimaryLayout>
+                <div className={styles.timerPage}>
+                    <RandomShapeLoading />
+                </div>
+            </PrimaryLayout>
+        );
+    }
 
   return (
     <PrimaryLayout>
@@ -105,9 +139,7 @@ export default function TimerPage() {
                 />
             </svg>
         </div>
-        <div className={styles.timerPage__clearButton} onClick={() => {
-            localStorage?.removeItem("endTime")
-        }}>clear</div>
+        <div className={styles.timerPage__clearButton} onClick={handleStopTimer}>clear</div>
       </div>
     </PrimaryLayout>
   );

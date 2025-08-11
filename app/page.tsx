@@ -2,13 +2,21 @@
 
 import PrimaryLayout from "@/components/layouts/primaryLayout";
 import styles from "./page.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function TimeSettingsPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const existingDuration = localStorage?.getItem("duration")
+
+    if (existingDuration) {
+      router.push(`/timer?duration=${existingDuration}`)
+    }
+  }, [router])
 
   const [timeInputValue, setTimeInputValue] = useState<number | ''>(55)
-  const router = useRouter();
 
   const handleStartTimer = () => {
     if (timeInputValue && typeof timeInputValue === 'number') {
