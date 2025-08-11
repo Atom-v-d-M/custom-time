@@ -1,6 +1,14 @@
 @use "../../../styles/partials/variables" as *;
+@use "../../../styles/partials/mixins" as *;
 
 .randomShapeLoading {
-    display: inline-block;
-    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__svg {
+        display: inline-block;
+        width: 200px;
+        height: 150px;
+    }
 }

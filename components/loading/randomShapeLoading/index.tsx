@@ -37,13 +37,15 @@ export const RandomShapeLoading = () => {
     }, [animationProgress]);
 
     return (
-        <svg className={styles.randomShapeLoading} width="407" height="305" viewBox="0 0 407 305" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path 
-                ref={pathRef}
-                d="M119.5 89.5C83.1 68.4844 67.3333 117.744 64 145C37 169.504 -9.9 230.81 18.5 280C54 341.488 64 193.871 119.5 179C163.9 167.103 138 220.043 119.5 248C146.833 250.667 207 244.6 229 199C256.5 142 289 242.5 366.5 214C444 185.5 352.799 35 318.158 95C283.517 155 251.5 52.5 242.658 19.5C235.584 -6.9 201.605 30.5 185.5 52.5C178.667 73.5898 155.9 110.516 119.5 89.5Z" 
-                stroke="white" 
-                strokeWidth="19"
-            />
-        </svg>
+        <div className={styles.randomShapeLoading}>
+            <svg className={styles.randomShapeLoading__svg} width="400" height="300" viewBox="0 0 407 305" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path 
+                    ref={pathRef}
+                    d="M119.5 89.5C83.1 68.4844 67.3333 117.744 64 145C37 169.504 -9.9 230.81 18.5 280C54 341.488 64 193.871 119.5 179C163.9 167.103 138 220.043 119.5 248C146.833 250.667 207 244.6 229 199C256.5 142 289 242.5 366.5 214C444 185.5 352.799 35 318.158 95C283.517 155 251.5 52.5 242.658 19.5C235.584 -6.9 201.605 30.5 185.5 52.5C178.667 73.5898 155.9 110.516 119.5 89.5Z" 
+                    stroke="white" 
+                    strokeWidth="19"
+                />
+            </svg>
+        </div>
     )
 }

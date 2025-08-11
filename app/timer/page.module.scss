@@ -11,7 +11,7 @@
   &__timerValuesWrapper {
     position: relative;
     display: flex;
-    gap: 30px;
+    gap: 10px;
   }
 
   &__durationSvg {
@@ -21,6 +21,28 @@
     transform: translate(-50%, -50%);
     display: inline-block;
     z-index: 1;
+    width: 250px;
+    height: 250px;
+
+    @include mobile-medium {
+      width: 300px;
+      height: 300px;
+    }
+
+    @include mobile-large {
+        width: 500px;
+        height: 500px;
+    }
+
+    @include tablet {
+        width: 650px;
+        height: 650px;
+    }
+
+    @include desktop {
+      width: 900px;
+      height: 900px;
+    }
   }
 
   &__timerValue {
