@@ -7,6 +7,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import moment from "moment";
 import { RandomShapeLoading } from "@/components/loading/randomShapeLoading";
 
+const bellSound = "/assets/sounds/dingding.wav";
+
 export default function TimerPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -61,21 +63,20 @@ export default function TimerPage() {
             const difference = endTime - now;
 
             if (difference <= 0) {
+                setTimerDone(true);
                 clearInterval(interval);
                 setRemainingMinutes(0);
                 setRemainingSeconds(0);
+                localStorage?.removeItem("duration");
+                localStorage?.removeItem("endTime");
+                const audio = new Audio(bellSound);
+                audio.play();
                 return;
             }
 
             // Calculate total minutes and seconds from the difference
             const totalMinutes = Math.floor(difference / (1000 * 60));
             const totalSeconds = Math.floor(difference / 1000);
-
-            if (!totalMinutes && !totalSeconds) {
-                localStorage?.removeItem("duration")
-                localStorage?.removeItem("endTime")
-                setTimerDone(true)
-            }
 
             // Set the remaining minutes and seconds
             setRemainingMinutes(totalMinutes);
