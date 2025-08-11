@@ -25,7 +25,7 @@ export default function TimeSettingsPage() {
               placeholder="00"
               value={timeInputValue}
               min={1}
-              max={180}
+              max={60}
               onChange={(e) => {
                 const value = e.target.value;
                 
@@ -38,7 +38,7 @@ export default function TimeSettingsPage() {
                 const numberValue = parseFloat(value);
                 
                 // Check if it's a valid number and within range
-                if (!isNaN(numberValue) && numberValue >= 1 && numberValue <= 180) {
+                if (!isNaN(numberValue) && numberValue >= 1 && numberValue <= 60) {
                   setTimeInputValue(numberValue);
                 }
               }}  

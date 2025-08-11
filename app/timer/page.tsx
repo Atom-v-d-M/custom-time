@@ -5,6 +5,7 @@ import styles from "./page.module.scss";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import moment from "moment";
+import { RandomShapeLoading } from "@/components/loading/randomShapeLoading";
 
 export default function TimerPage() {
   const searchParams = useSearchParams();
@@ -67,11 +68,11 @@ export default function TimerPage() {
 }, [timerDuration]);
 
   // Show loading or redirect if no valid duration
-  if (!timerDuration) {
+  if (!timerDuration || (!remainingMinutes && !remainingSeconds)) {
     return (
       <PrimaryLayout>
         <div className={styles.timerPage}>
-          <div>Loading timer...</div>
+          <RandomShapeLoading />
         </div>
       </PrimaryLayout>
     );
@@ -80,8 +81,12 @@ export default function TimerPage() {
   return (
     <PrimaryLayout>
       <div className={styles.timerPage}>
-        <h1>{remainingMinutes}</h1>
-        <h1>{remainingSeconds}</h1>
+        <div className={styles.timerPage__timerValuesWrapper}>
+            {/* make me a svg */}
+            <h1 className={styles.timerPage__timerValue}>{remainingMinutes < 10 ? "0" : ""}{remainingMinutes}</h1>
+            <h1 className={styles.timerPage__timerValue}>:</h1>
+            <h1 className={styles.timerPage__timerValue}>{remainingSeconds < 10 ? "0" : ""}{remainingSeconds}</h1>
+        </div>
         <div onClick={() => {
             localStorage?.removeItem("endTime")
         }}>clear</div>

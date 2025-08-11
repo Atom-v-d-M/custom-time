@@ -1,2 +1,39 @@
 @use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
 
+.timerPage {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  &__timerValuesWrapper {
+    position: relative;
+    display: flex;
+    gap: 30px;
+  }
+
+  &__timerValue {
+    font-size: 56px;
+    font-weight: bold;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+
+    @include mobile-medium {
+      font-size: 72px;
+    }
+
+    @include mobile-large {
+      font-size: 150px;
+    }
+
+    @include tablet {
+      font-size: 200px;
+    }
+
+    @include desktop {
+      font-size: 275px;
+    }
+  }
+}
