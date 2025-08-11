@@ -70,8 +70,10 @@ export default function TimerPage() {
                 setRemainingSeconds(0);
                 localStorage?.removeItem("duration");
                 localStorage?.removeItem("endTime");
-                const audio = new Audio(bellSound);
-                audio.play();
+                if (audioEnabled) {
+                    const audio = new Audio(bellSound);
+                    audio.play();
+                }
                 return;
             }
 
@@ -85,7 +87,7 @@ export default function TimerPage() {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [timerDuration]);
+    }, [audioEnabled, timerDuration]);
 
 
     const handleStopTimer = () => {
