@@ -21,7 +21,8 @@ export default function TimerPage() {
     
     if (duration) {
       const parsedDuration = parseInt(duration, 10);
-      if (!isNaN(parsedDuration) && parsedDuration > 0 && parsedDuration <= 180) {
+      if (!isNaN(parsedDuration) && parsedDuration > 0 && parsedDuration <= 60) {
+        // fix the duration issues for animation. needs to know about active timers
         setTimerDuration(parsedDuration);
       } else {
         // Invalid duration, redirect back to settings page
@@ -82,12 +83,29 @@ export default function TimerPage() {
     <PrimaryLayout>
       <div className={styles.timerPage}>
         <div className={styles.timerPage__timerValuesWrapper}>
-            {/* make me a svg */}
             <h1 className={styles.timerPage__timerValue}>{remainingMinutes < 10 ? "0" : ""}{remainingMinutes}</h1>
             <h1 className={styles.timerPage__timerValue}>:</h1>
             <h1 className={styles.timerPage__timerValue}>{remainingSeconds < 10 ? "0" : ""}{remainingSeconds}</h1>
+            <svg className={styles.timerPage__durationSvg} width="700" height="700" viewBox="0 0 1002 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Background circle - full timer duration */}
+                <path 
+                    d="M501 15C769.148 15 986.5 232.156 986.5 500C986.5 767.844 769.148 985 501 985C232.852 985 15.5 767.844 15.5 500C15.5 232.156 232.852 15 501 15Z" 
+                    stroke="#00FF00"
+                    strokeWidth="30" 
+                />
+                
+                {/* Progress circle - remaining time, starts from top */}
+                <path 
+                    d="M501 15C769.148 15 986.5 232.156 986.5 500C986.5 767.844 769.148 985 501 985C232.852 985 15.5 767.844 15.5 500C15.5 232.156 232.852 15 501 15Z" 
+                    stroke="#EF1010" 
+                    strokeWidth="30"
+                    strokeDasharray="3050"
+                    strokeDashoffset={3050 * ((remainingMinutes * 60 + remainingSeconds) / (timerDuration * 60))}
+                    transform="rotate(0 501 500)"
+                />
+            </svg>
         </div>
-        <div onClick={() => {
+        <div className={styles.timerPage__clearButton} onClick={() => {
             localStorage?.removeItem("endTime")
         }}>clear</div>
       </div>
