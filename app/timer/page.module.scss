@@ -24,6 +24,7 @@
   }
 
   &__timerValue {
+    user-select: none;
     font-size: 56px;
     z-index: 3;
     font-weight: bold;
@@ -49,5 +50,49 @@
 
   &__clearButton {
     z-index: 3;
+  }
+}
+
+.audioButton {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  cursor: pointer;
+  width: 75px;
+  height: 75px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  cursor: pointer;
+  width: 75px;
+  height: 75px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
